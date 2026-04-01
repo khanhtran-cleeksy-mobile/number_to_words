@@ -48,7 +48,7 @@ class VietnameseNumberToWords extends NumberToWordsLanguage {
     if (ones == 0) return '';
     if (tens >= 2) {
       if (ones == 1) return 'mốt';
-      if (ones == 4) return 'tư';
+      if (ones == 4) return 'bốn';
       if (ones == 5) return 'lăm';
     }
     return _digitNames[ones];
