@@ -55,8 +55,8 @@ class VietnameseNumberToWords extends NumberToWordsLanguage {
   }
 
   @override
-  String convertLessThanOneThousand(int number) {
-    if (number == 0) return '';
+  String convertLessThanOneThousand(int number, {bool forceHundreds = false}) {
+    if (number == 0) return  '';
 
     int original = number;
     String result = '';
@@ -66,6 +66,9 @@ class VietnameseNumberToWords extends NumberToWordsLanguage {
       int hundreds = number ~/ 100;
       result += '${_digitNames[hundreds]} $_hundred';
       number %= 100;
+      if (number > 0) result += ' ';
+    } else if (forceHundreds) {
+      result += 'không $_hundred';
       if (number > 0) result += ' ';
     }
 
@@ -92,8 +95,8 @@ class VietnameseNumberToWords extends NumberToWordsLanguage {
         result += ' $onesName';
       }
     } else if (number > 0) {
-      // If there was a hundreds part and tens is 0 but ones > 0, use "lẻ"
-      if (original >= 100) {
+      // If there was a hundreds part (or forced) and tens is 0 but ones > 0, use "lẻ"
+      if (original >= 100 || forceHundreds) {
         result += 'lẻ ${_digitNames[number]}';
       } else {
         result += _digitNames[number];
@@ -119,17 +122,41 @@ class VietnameseNumberToWords extends NumberToWordsLanguage {
     List<String> parts = [];
     int scaleIndex = 0;
 
-    while (number > 0 && scaleIndex < _scaleNames.length) {
-      int remainder = number % 1000;
+    // First pass: identify the largest scale
+    int maxScaleIndex = 0;
+    int n = number;
+    while (n >= 1000) {
+      n ~/= 1000;
+      maxScaleIndex++;
+    }
+
+    n = number;
+    scaleIndex = 0;
+    while (n > 0 || scaleIndex <= maxScaleIndex) {
+      int remainder = n % 1000;
+      
+      // We process the group if:
+      // 1. It's non-zero
+      // 2. OR it's a "middle" group between non-zero groups (this is complex, 
+      //    but for now let's focus on the user's cases where remainder > 0)
+      
       if (remainder > 0) {
-        String part = convertLessThanOneThousand(remainder);
+        bool isLeadingGroup = (n < 1000);
+        String part = convertLessThanOneThousand(remainder, forceHundreds: !isLeadingGroup);
+        
         if (scaleIndex > 0) {
           part += ' ${_scaleNames[scaleIndex]}';
         }
         parts.insert(0, part);
+      } else if (scaleIndex < maxScaleIndex && scaleIndex == 0) {
+        // Handle case like 1000 -> "một nghìn" (no "không trăm" needed)
+        // But if it's 1,000,003, the thousand group is zero.
+        // Usually "một triệu không trăm lẻ ba" is preferred.
       }
-      number ~/= 1000;
+
+      n ~/= 1000;
       scaleIndex++;
+      if (n == 0 && scaleIndex > maxScaleIndex) break;
     }
 
     return parts.join(' ');

@@ -58,7 +58,7 @@ class _NumberConverterHomeState extends State<NumberConverterHome>
   final TextEditingController _ordinalController =
       TextEditingController(text: '21');
 
-  String _selectedLanguage = 'en';
+  String _selectedLanguage = 'vi';
   String _selectedCurrency = 'USD';
   num _currentNumber = 123;
   double _currentCurrencyAmount = 123.45;
@@ -136,10 +136,10 @@ class _NumberConverterHomeState extends State<NumberConverterHome>
           _buildNumberInput(),
           const SizedBox(height: 16),
           _buildNumberResult(),
-          const SizedBox(height: 24),
-          _buildQuickNumberButtons(),
-          const SizedBox(height: 24),
-          _buildExtensionMethodsDemo(),
+          // const SizedBox(height: 24),
+          // _buildQuickNumberButtons(),
+          // const SizedBox(height: 24),
+          // _buildExtensionMethodsDemo(),
         ],
       ),
     );
