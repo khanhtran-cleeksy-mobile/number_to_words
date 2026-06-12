@@ -488,11 +488,11 @@ extension IntegerToWordsExtension on int {
   /// Example:
   /// ```dart
   /// print(123.canConvertToWords()); // true
-  /// print(999999999999999.canConvertToWords()); // true (within range)
+  /// print(9007199254740991.canConvertToWords()); // true (within range)
   /// ```
   bool canConvertToWords() {
     // Check if the number is within supported range
-    return abs() <= 999999999999999; // Up to quadrillion range
+    return abs() <= 9007199254740991; // Up to JS max safe integer
   }
 
   /// Get the word length of this number when converted to English words

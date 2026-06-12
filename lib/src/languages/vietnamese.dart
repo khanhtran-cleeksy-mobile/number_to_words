@@ -20,6 +20,13 @@ class VietnameseNumberToWords extends NumberToWordsLanguage {
   static const String _million = 'triệu';
   static const String _billion = 'tỷ';
   static const String _trillion = 'nghìn tỷ';
+  static const String _quadrillion = 'triệu tỷ';
+  static const String _quintillion = 'tỷ tỷ';
+  static const String _sextillion = 'nghìn tỷ tỷ';
+  static const String _septillion = 'triệu tỷ tỷ';
+  static const String _octillion = 'tỷ tỷ tỷ';
+  static const String _nonillion = 'nghìn tỷ tỷ tỷ';
+  static const String _decillion = 'triệu tỷ tỷ tỷ';
 
   static const List<String> _scaleNames = [
     '',
@@ -27,6 +34,13 @@ class VietnameseNumberToWords extends NumberToWordsLanguage {
     _million,
     _billion,
     _trillion,
+    _quadrillion,
+    _quintillion,
+    _sextillion,
+    _septillion,
+    _octillion,
+    _nonillion,
+    _decillion,
   ];
 
   // Base digit names 0-9 (context-free)

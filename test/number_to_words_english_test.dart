@@ -186,6 +186,7 @@ void main() {
     test('canConvertToWords() extension', () {
       expect(123.canConvertToWords(), true);
       expect(999999999999999.canConvertToWords(), true);
+      expect(9007199254740991.canConvertToWords(), true);
       expect((-123).canConvertToWords(), true);
     });
 
@@ -1311,6 +1312,10 @@ void main() {
       final largeNumber = 999999999999999;
       expect(largeNumber.toWords().isNotEmpty, true);
       expect(largeNumber.canConvertToWords(), true);
+
+      final jsMaxSafeInt = 9007199254740991;
+      expect(jsMaxSafeInt.toWords().isNotEmpty, true);
+      expect(jsMaxSafeInt.canConvertToWords(), true);
     });
 
     test('Extension error handling', () {
